@@ -1,0 +1,37 @@
+.main{
+    margin: 40px;
+    background-color: white;
+}
+
+body{
+    background-color: #efefef;
+}
+
+.btn-success{
+    float: right;
+    margin-bottom: 12px;
+}
+
+.avatar_url{
+    width:75px;
+}
+
+.ReplyAndView{
+    font-size:13px;
+    font-weight:normal;
+    color:#999;
+}
+
+.description{
+    font-size:20px;
+}
+
+.ReplyAndView,.text-desc,.edit{
+    font-size:13px;
+    font-weight:normal;
+    color:#999;
+}
+
+.profile .section{
+    margin-top: 15px;
+}
