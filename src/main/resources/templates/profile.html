@@ -20,19 +20,30 @@
             <h2><span th:text="${sectionName}"></span></h2>
             <hr>
             <!--问题信息-->
-            <div class="media" th:each="questionDto : ${pageInfo.list}">
+            <div class="media" th:if="${section == 'question'}" th:each="questionDto : ${pageInfo.list}">
                 <div class="media-left">
-                    <a href="#">
                         <img class="media-object avatar_url" th:src="${questionDto.user.avatarUrl}">
-                    </a>
                 </div>
                 <div class="media-body">
-                    <h3 class="media-heading" th:text="${questionDto.title}"></h3>
-                    <span class="description" th:text="${questionDto.description}">内容</span><br>
+                    <a th:href="@{'question/'+${questionDto.id}}">
+                        <h3 class="media-heading" th:text="${questionDto.title}"></h3>
+                    </a>
+                    <!--<span class="description" th:text="${questionDto.description}">内容</span><br>-->
                     <span class="ReplyAndView"><span th:text="${questionDto.commentCount}"></span>个回复·<span th:text="${questionDto.viewCount}"></span>次浏览·
-                        <span th:text="${#dates.format(questionDto.gmtCreate,'DD MM YYYY')}"></span></span>
+                        <span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd')}"></span></span>
                 </div>
             </div>
+
+            <!--回复列表-->
+            <div class="media" th:if="${section == 'replies'}" th:each="notificationDto : ${pageInfo.list}">
+                <div class="media-body">
+                    <span class="media-heading">
+                        <span th:text="${notificationDto.getNotifierLogin()}+'回答了问题'"></span><a th:href="@{'/readNotify/'+${notificationDto.getId()}}" th:text="${notificationDto.getOuterTitle()}"></a>
+                    </span>
+                    <span style="float: right" th:text="${#dates.format(notificationDto.gmtCreate,'yyyy-MM-dd')}"></span>
+                </div>
+            </div>
+
             <!--分页信息-->
             <div class="modal-footer no-margin-top">
                 <div class="col-md-6">
@@ -68,7 +79,7 @@
         <div class="col-lg-3 col-xs-12 col-sm-12 col-md-12">
             <div class="list-group section">
                 <a href="/profile/question" th:class="${section == 'question'}?'active list-group-item':'list-group-item'">我的问题</a>
-                <a href="/profile/replies" th:class="${section == 'replies'}?'active list-group-item':'list-group-item'">我的回复</a>
+                <a href="/profile/replies" th:class="${section == 'replies'}?'active list-group-item':'list-group-item'">我的回复<span class="badge" th:text="${notifyCount}"></span></a>
             </div>
         </div>
     </div>

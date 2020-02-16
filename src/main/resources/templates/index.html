@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="/css/community.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 </head>
+<script type="application/javascript">
+    window.onload= function(){
+        var closable = window.localStorage.getItem("closable");
+        if(closable == "true"){
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <!--导航栏-->
 <div th:include="navigation :: nav"></div>
@@ -21,18 +30,15 @@
             <hr>
             <div class="media" th:each="questionDto : ${pageInfo.list}">
                 <div class="media-left">
-                    <a href="#">
                         <img class="media-object avatar_url" th:src="${questionDto.user.avatarUrl}">
-                    </a>
                 </div>
                 <div class="media-body">
                     <a th:href="@{'question/'+${questionDto.id}}">
-                    <h3 class="media-heading" th:text="${questionDto.title}">
-                    </h3>
+                        <h3 class="media-heading" th:text="${questionDto.title}"></h3>
                     </a>
-                    <span class="description" th:text="${questionDto.description}">内容</span><br>
+                    <!--<span class="description" th:text="${questionDto.getDescription()}">内容</span><br> -->
                     <span class="ReplyAndView"><span th:text="${questionDto.commentCount}"></span>个回复·<span th:text="${questionDto.viewCount}"></span>次浏览·
-                        <span th:text="${#dates.format(questionDto.gmtCreate,'DD MM YYYY')}"></span></span>
+                        <span th:text="${#dates.format(questionDto.gmtCreate,'yyyy-MM-dd')}"></span></span>
                 </div>
             </div>
             <!--分页信息-->
@@ -43,32 +49,37 @@
 
                 <ul class="pagination pull-right no-margin">
                     <li th:if="${pageInfo.hasPreviousPage}">
-                        <a th:href="'/?pageNum=1'">首页</a>
+                        <a th:href="@{/(pageNum=1,search=${search})}">首页</a>
                     </li>
 
                     <li class="prev" th:if="${pageInfo.hasPreviousPage}">
-                        <a th:href="'/?pageNum='+${pageInfo.prePage}">
+                        <a th:href="@{/(pageNum=${pageInfo.getPrePage()},search=${search})}">
                             <
                         </a>
                     </li>
                     <!--遍历条数-->
                     <li th:each="nav:${pageInfo.navigatepageNums}">
-                        <a th:href="'/?pageNum='+${nav}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
+                        <a th:href="@{/(pageNum=${nav},search=${search})}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
                         <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
                     </li>
                     <li class="next" th:if="${pageInfo.hasNextPage}">
-                        <a th:href="'/?pageNum='+${pageInfo.nextPage}">
+                        <a th:href="@{/(pageNum=${pageInfo.getNextPage()},search=${search})}">
                             >
                         </a>
                     </li>
                     <li>
-                        <a th:href="'/?pageNum='+${pageInfo.pages}">尾页</a>
+                        <a th:href="@{/(pageNum=${pageInfo.getPages()},search=${search})}">尾页</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-lg-3 col-xs-12 col-sm-12 col-md-12">
             <h2>热门话题</h2>
+            <ul class="question-related">
+                <li style="margin-bottom:5px;" th:each="hoTitle : ${hotTitles}">
+                    <a th:href="@{'/question/'+${hoTitle.getId()}}" th:text="${hoTitle.getTitle()}"></a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

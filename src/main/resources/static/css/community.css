@@ -1,3 +1,7 @@
+.media{
+    margin-bottom: 25px;
+}
+
 .main{
     margin: 40px;
     background-color: white;
@@ -9,13 +13,16 @@ body{
 
 .btn-success{
     float: right;
-    margin-bottom: 12px;
+    margin:12px 0px;
 }
 
 .avatar_url{
-    width:75px;
+    width:50px;
 }
 
+.login{
+    padding: 20px 0px;
+}
 .ReplyAndView{
     font-size:13px;
     font-weight:normal;
@@ -34,4 +41,42 @@ body{
 
 .profile .section{
     margin-top: 15px;
+}
+
+.menu{
+    color:#999;
+    margin-top: 5px;
+}
+
+.menu .icon{
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu .active{
+    color:#499ef3;
+}
+.menu .icon:hover{
+    color:#499ef3;
+}
+
+.comments{
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.sub-comments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.question-related{
+    line-height: 20px;
+    font-size: 15px;
+    margin-left: 0px;
+    list-style: none;
+    padding-left: 0px;
 }

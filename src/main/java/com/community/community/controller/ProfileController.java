@@ -1,5 +1,6 @@
 package com.community.community.controller;
 
+import com.community.community.Service.NotificationService;
 import com.community.community.Service.QuestionService;
 import com.community.community.entity.User;
 import com.github.pagehelper.PageInfo;
@@ -17,6 +18,8 @@ public class ProfileController {
 
     @Autowired
     QuestionService questionService;
+    @Autowired
+    NotificationService notificationService;
 
     @GetMapping("/profile/{active}")
     public String profile(@PathVariable(name="active") String active,
@@ -37,6 +40,10 @@ public class ProfileController {
         }else if("replies".equals(active)) {
             model.addAttribute("section", active);
             model.addAttribute("sectionName", "我的回复");
+            PageInfo pageInfo = notificationService.NotificationDTOList(user.getId(),pageNum,pageSize);
+            int notifyCount = pageInfo.getList().size();
+            model.addAttribute("notifyCount",notifyCount);
+            model.addAttribute("pageInfo",pageInfo);
         }
         return "profile";
     }

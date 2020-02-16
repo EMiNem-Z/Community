@@ -2,9 +2,9 @@ package com.community.community.controller;
 
 import com.community.community.Service.QuestionService;
 import com.community.community.dto.QuestionDTO;
+import com.community.community.entity.Question;
 import com.community.community.entity.User;
 import com.community.community.mapper.UserMapper;
-import com.community.community.result.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,16 @@ public class IndexController {
     public String index(HttpServletRequest request, User user,
                         Model model,
                         @RequestParam(name="pageNum",defaultValue = "1")Integer pageNum,
-                        @RequestParam(name="pageSize",defaultValue = "5")Integer pageSize){
+                        @RequestParam(name="pageSize",defaultValue = "5")Integer pageSize,
+                        @RequestParam(name="search",required=false)String search){
         //登陆信息
         if (user != null) {
             request.getSession().setAttribute("user", user);
         }
-        PageInfo pageInfo = questionService.questionDTOList(pageNum,pageSize);
+        PageInfo pageInfo = questionService.questionDTOList(search,pageNum,pageSize);
+        List<Question> hotTitles = questionService.hotTitle();
+        model.addAttribute("hotTitles",hotTitles);
+        model.addAttribute("search",search);
         model.addAttribute("pageInfo",pageInfo);
         return "index";
     }
