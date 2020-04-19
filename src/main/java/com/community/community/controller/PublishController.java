@@ -31,7 +31,7 @@ public class PublishController {
         model.addAttribute("tag",question.getTag());
         model.addAttribute("tags", tagDTO.getTags());
         model.addAttribute("id",id);
-
+        //获得数据在发布页面回显
         return "publish";
     }
 

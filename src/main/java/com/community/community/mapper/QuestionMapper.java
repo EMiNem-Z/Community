@@ -40,4 +40,7 @@ public interface QuestionMapper {
 
     @Select("select id,title from question ORDER BY view_count desc limit 10")
     List<Question> selectHot();
+
+    @Delete("DELETE FROM QUESTION WHERE id=#{id}")
+    void deleteByid(@Param("id") Integer id);
 }

@@ -1,10 +1,7 @@
 package com.community.community.mapper;
 
 import com.community.community.entity.Comment;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -50,11 +47,17 @@ public interface CommentMapper {
      */
     int updateByPrimaryKey(Comment record);
 
-    @Select("select * From comment where parent_id = #{id}")
-    List<Comment> selectByParentId(@Param("id") Integer id);
+    @Select("select * From comment where parent_id = #{parentId}")
+    List<Comment> selectByParentId(@Param("parentId") Integer parentId);
 
-    @Select("select * From comment where parent_id = #{id} AND type=#{type} ORDER BY gmt_create desc")
-    List<Comment> selectByParentIdAndType(@Param("id") Integer id,@Param("type") Integer type);
+    @Select("select * From comment where parent_id = #{parentId} AND type=#{type} ORDER BY gmt_create desc")
+    List<Comment> selectByParentIdAndType(@Param("parentId") Integer parentId,@Param("type") Integer type);
+
+    @Select("select id From comment where parent_id = #{parentId} AND type=#{type}")
+    List<Long> selectIdByParentIdAndType(@Param("parentId") Integer parentId,@Param("type") Integer type);
+
+    @Delete("DELETE FROM COMMENT WHERE parent_id = #{parentId} AND type=#{type}")
+    void deleteByParentIdAndType(@Param("parentId") Integer parentId,@Param("type") Integer type);
 
     @Update("UPDATE COMMENT SET comment_count = comment_count + 1 where id=#{id}")
     void incrCommentCount(@Param("id") Integer id);

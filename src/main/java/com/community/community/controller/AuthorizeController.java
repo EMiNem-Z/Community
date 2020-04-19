@@ -42,8 +42,8 @@ public class AuthorizeController {
         accessTokenDTO.setCode(code);
         accessTokenDTO.setRedirect_uri(redirectUrl);
         accessTokenDTO.setState(state);
-        String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GithubUser githubUser = githubProvider.getUser(accessToken);
+        String accessToken = githubProvider.getAccessToken(accessTokenDTO);   //获取acessToken
+        GithubUser githubUser = githubProvider.getUser(accessToken);          //通过acessToken获取GitHub的User信息
         if(githubUser != null && githubUser.getId()!=null){
             User user = new User();
             user.setAccountId(String.valueOf(githubUser.getId()));
@@ -53,8 +53,8 @@ public class AuthorizeController {
             user.setBio(githubUser.getBio());
             user.setAvatarUrl(githubUser.getAvatarUrl());
             user.setGmtCreate(System.currentTimeMillis());
-            userService.createOrUpdate(user);
-            response.addCookie(new Cookie("token",token));
+            userService.createOrUpdate(user);                               //存入数据库中
+            response.addCookie(new Cookie("token",token));           //存储token到Cookie
             return "redirect:/";
         }else{
             return "redirect:/";

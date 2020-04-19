@@ -30,7 +30,7 @@ public class ProfileController {
         if (user != null) {
             request.getSession().setAttribute("user", user);
         }else{
-            return "/";
+            return "redirect:/";
         }
         if("question".equals(active)){
             model.addAttribute("section",active);

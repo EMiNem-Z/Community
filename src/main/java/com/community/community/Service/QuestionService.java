@@ -3,6 +3,7 @@ package com.community.community.Service;
 import com.community.community.dto.QuestionDTO;
 import com.community.community.entity.Question;
 import com.community.community.entity.User;
+import com.community.community.mapper.CommentMapper;
 import com.community.community.mapper.QuestionMapper;
 import com.community.community.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +12,7 @@ import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ public class QuestionService {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    CommentMapper commentMapper;
 
     @Autowired
     UserMapper userMapper;
@@ -105,5 +110,15 @@ public class QuestionService {
     public List<Question> hotTitle() {
         List<Question> hotTitles = questionMapper.selectHot();
         return hotTitles;
+    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        questionMapper.deleteByid(id);
+        List<Long> commentIds = commentMapper.selectIdByParentIdAndType(id,1);
+        commentMapper.deleteByParentIdAndType(id,1);
+        for(Long commengId :commentIds){
+            commentMapper.deleteByParentIdAndType(commengId.intValue(),2);
+        }
     }
 }

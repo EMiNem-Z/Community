@@ -54,7 +54,7 @@ public class CommentController {
     @GetMapping(value="/like/{id}")
     @ResponseBody
     public Object like(@PathVariable(name="id") Integer id){
-        commentService.like(id);
+        commentService.like(id);                //通过id给该评论的点赞数+1
         return ResultDTO.SUCCESS;
     }
 }

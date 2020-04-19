@@ -25,7 +25,7 @@
                         <img class="media-object avatar_url" th:src="${questionDto.user.avatarUrl}">
                 </div>
                 <div class="media-body">
-                    <a th:href="@{'question/'+${questionDto.id}}">
+                    <a th:href="@{'/question/'+${questionDto.id}}">
                         <h3 class="media-heading" th:text="${questionDto.title}"></h3>
                     </a>
                     <!--<span class="description" th:text="${questionDto.description}">内容</span><br>-->

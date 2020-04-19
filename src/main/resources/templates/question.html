@@ -37,6 +37,9 @@
                 <a th:href="@{'/publish/'+${questionDto.getId()}}" th:if="${session.user !=null && questionDto.getCreator() == session.user.getId()}" class="edit">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
                 </a>
+                <a th:href="@{'/delete/'+${questionDto.getId()}}" th:if="${session.user !=null && questionDto.getCreator() == session.user.getId()}" onClick="return confirm('确定删除?');" class="delete">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true">删除</span>
+                </a>
             </div>
 
             <!--回复-->

@@ -36,8 +36,8 @@ public class IndexController {
         if (user != null) {
             request.getSession().setAttribute("user", user);
         }
-        PageInfo pageInfo = questionService.questionDTOList(search,pageNum,pageSize);
-        List<Question> hotTitles = questionService.hotTitle();
+        PageInfo pageInfo = questionService.questionDTOList(search,pageNum,pageSize);     //获取帖子集合
+        List<Question> hotTitles = questionService.hotTitle();                            //获取热门话题集合
         model.addAttribute("hotTitles",hotTitles);
         model.addAttribute("search",search);
         model.addAttribute("pageInfo",pageInfo);

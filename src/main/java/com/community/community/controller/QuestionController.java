@@ -26,7 +26,6 @@ public class QuestionController {
     public String question(@PathVariable("id") Integer id, HttpServletRequest request,
                            Model model,
                            User user){
-
         request.getSession().setAttribute("user", user);
         QuestionDTO questionDTO = questionService.getById(id);
         questionService.incViewCount(id);
@@ -37,5 +36,15 @@ public class QuestionController {
         model.addAttribute("commentDtos",commentDTOs);
         return "question";
 
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id,
+                         User user){
+        if(user == null){
+            return "redirect:/";
+        }
+        questionService.deleteById(id);
+        return "redirect:/";
     }
 }
